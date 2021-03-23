@@ -6,9 +6,15 @@ import * as json from "koa-json";
 import * as bodyParser from "koa-bodyparser";
 import { config } from "./config/configManager";
 import { AppRouter } from "./routes";
+import { keycloak } from "./config/keycloak-config";
 
 const app: Koa = new Koa();
 const router: Router = new Router();
+
+keycloak.middleware()
+  .map(item => {
+    app.use(item)
+  });
 
 // Middlewares
 app.use(cors());
